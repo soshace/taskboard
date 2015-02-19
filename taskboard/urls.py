@@ -7,4 +7,11 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^$', 'website.views.index'),
+    url(r'^profile/$', 'website.views.profile'),
+    url(r'^post/$', 'website.views.index'),
+    url(r'^feed/$', 'website.views.index'),
+
+    url(r'^ajax/register/$', 'website.views.ajax_register'),
 )

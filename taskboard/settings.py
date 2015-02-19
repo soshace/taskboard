@@ -60,11 +60,11 @@ WSGI_APPLICATION = 'taskboard.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('DATABASE_NAME', ''),
-        'USER': os.environ.get('DATABASE_USER', ''),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD', ''),
-        'HOST': os.environ.get('DATABASE_HOST', ''),
-        'PORT': os.environ.get('DATABASE_PORT', ''),
+        'NAME': 'taskboard',
+        'USER': 'djangouser',
+        'PASSWORD': 'djangopassword',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -86,5 +86,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
-
-AUTH_PROFILE_MODULE = "accounts.UserProfile"

@@ -1,0 +1,4 @@
+/* removing ugly points before django form li */
+form > ul {
+	list-style: none;
+}

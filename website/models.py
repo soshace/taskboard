@@ -7,8 +7,7 @@ class UserProfile(models.Model):
 	""" Additive data about users - enlarging default User model"""
 	account = models.OneToOneField(User, related_name='profile')
 	cash = models.FloatField(default=0.0)
-	is_customer = models.BooleanField(default=False)
-	is_executor = models.BooleanField(default=False)
+	user_type = models.PositiveSmallIntegerField(default=0) # 0 - customer, 1 - executor
 
 class Task(models.Model):
 	""" Describes tasks for executors from customers"""
