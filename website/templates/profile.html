@@ -1,0 +1,63 @@
+<html>
+	<head>
+		<title>TaskBoard: Профиль</title>
+		<link rel="icon" type="image/x-icon" href="{{STATIC_URL}}images/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}images/favicon.ico" />
+
+		<link rel="stylesheet" href="{{STATIC_URL}}css/custom.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.3.3.2.min.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-theme.3.3.2.min.css" />
+
+		<script src="{{STATIC_URL}}js/jquery.2.1.3.min.js"></script>
+		<script src="{{STATIC_URL}}js/bootstrap.3.3.2.min.js"></script>
+		<script src="{{STATIC_URL}}js/custom.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<!-- logo row -->
+			<div class="row">
+				<div class="col-md-12">
+					<img src="{{STATIC_URL}}images/taskboard-logo.png" style="display: block; margin-left: auto; margin-right: auto;" />
+				</div>
+			</div>
+
+			<!-- select account type row -->
+			<div class="row">
+  				<div class="col-md-3 vcenter" style="text-align: right; border-right: 1px dashed #333;">
+  				</div>
+
+  				<div class="col-md-3 vcenter" style="text-align: right; border-right: 1px dashed #333;">
+					<p>Имя пользователя:</p>
+					<p>Email:</p>
+					<p>Статус:</p>
+					<p>Счет:</p>
+					<p>Заказов:</p>
+				</div>
+  				
+  				<div class="col-md-3 vcenter" style="text-align: left;">
+  					<p>{{ username }}</p>
+  					<p>{{ email }}</p>
+  					
+  					{% if user_type == 0 %}
+  						<p>Заказчик</p>
+  						<p>∞</p>
+  					{% else %}
+  						<p>Исполнитель</p>
+  						<p>${{ cash }}</p>
+  					{% endif %}
+  					<p>{{ count_task }}</p>
+  				</div>
+  				<div class="col-md-3 vcenter" style="text-align: right; border-right: 1px dashed #333;">
+  				</div>
+			</div>
+			<div style="text-align: center;">
+				{% if user_type == 0 %}
+					<p><a href="/post/">Опубликовать работу</a></p>
+				{% else %}
+					<p><a href="/feed/">Просмотреть вакантные задачи</a></p>
+				{% endif %}
+				<p><a href="/ajax/logout/" id="logout">Выйти</a></p>
+			</div>
+		</div>
+	</body>
+</html>

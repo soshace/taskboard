@@ -10,8 +10,14 @@ urlpatterns = patterns('',
 
     url(r'^$', 'website.views.index'),
     url(r'^profile/$', 'website.views.profile'),
-    url(r'^post/$', 'website.views.index'),
-    url(r'^feed/$', 'website.views.index'),
+    url(r'^post/$', 'website.views.post'),
+    url(r'^feed/$', 'website.views.feed'),
 
     url(r'^ajax/register/$', 'website.views.ajax_register'),
+    url(r'^ajax/login/$', 'website.views.ajax_login'),
+    url(r'^ajax/logout/$', 'website.views.ajax_logout'),
+    url(r'^ajax/post/$', 'website.views.ajax_post_task'),
+    url(r'^ajax/take/(\d+)/$', 'website.views.ajax_take_task'),
+
+    url(r'^$', 'django.contrib.auth.views.login'),
 )

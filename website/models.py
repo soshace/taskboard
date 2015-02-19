@@ -16,6 +16,5 @@ class Task(models.Model):
 	title = models.CharField(max_length=140)
 	description = models.TextField()
 	posting_date = models.DateField(auto_now_add=True, blank=True)
-	status = models.CharField(default='Открыта', max_length=15)
 	cost = models.FloatField()
 
