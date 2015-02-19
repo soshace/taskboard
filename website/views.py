@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.conf import settings
 
 from website.forms import RegistrationForm, LoginForm, PostTaskForm, TakeTaskForm
 from website.models import UserProfile, Task
@@ -54,6 +55,7 @@ def profile(request):
     try:
         user_profile = UserProfile.objects.get(account=request.user)
     except ObjectDoesNotExist:
+        user_profile = UserProfile(account=request.user)
         return HttpResponse("UserProfile doesn't exist!")
 
     if user_profile.user_type == 0: #customer
@@ -150,7 +152,7 @@ def ajax_take_task(request, task_number):
 
     try:
         user_profile = UserProfile.objects.get(account=request.user)
-        user_profile.cash += task.cost #-minus comission
+        user_profile.cash += (((100.0 - settings.COMMISSION)/100.0) * task.cost)
         user_profile.save()
     except ObjectDoesNotExist:
         return HttpResponse("NOWITHDRAWAL")

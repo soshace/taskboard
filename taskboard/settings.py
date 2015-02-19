@@ -88,3 +88,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_URL = '/'
+
+COMMISSION = 10 #10% percentage commision from the system (web site)

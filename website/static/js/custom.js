@@ -82,7 +82,7 @@ $(document).ready(function(){
 	});
 
 
-	$("#take_task_form").submit(function(event){
+	$("form[id*=take_task_form").submit(function(event){
 		console.log("posting the task");
 
 		event.preventDefault();
