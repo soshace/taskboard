@@ -4,6 +4,7 @@ Simple task board on Django for 404 Group.
 Это тестовое задание. В нем есть места, которые можно оптимизировать, но "совершенству нет предела". Данный сайт сейчас крутится на AWS: http://54.93.84.128/, прошу посмотреть. Все тестировалось на ubuntu 14.04 x64.
 
 Уже зарегистрированные пользователи:
+
 Заказчик:
 l: customer
 p: customer
@@ -22,16 +23,16 @@ p: super
 
 Ниже инструкция для развертывания на своей машине.
 
-УСТАНОВКА
+**УСТАНОВКА**
 
 Необходимо поставить пакеты ubuntu для "postgresql", "apache", "python". В некоторых случаях понадобится команда "sudo" или быть в той или иной группе, например, www-data.
 
 Рекомендованное обновление системы:
->> apt-get update
->> apt-get upgrade
+>> >>apt-get update
+>> >>apt-get upgrade
 
 Пакеты:
->> apt-get install python-virtualenv python-dev libpq-dev postgresql postgresql-contrib build-essential git python-pip apache2 libapache2-mod-wsgi
+>> >>apt-get install python-virtualenv python-dev libpq-dev postgresql postgresql-contrib build-essential git python-pip apache2 libapache2-mod-wsgi
 
 ========================================================
 Сначала настраиваем БД.
@@ -100,6 +101,7 @@ Alias /static/ /var/www/TaskBoard/static/
 DocumentRoot /var/www/TaskBoard
 "
 ПРИМЕЧАНИЕ: в продакш версии (с доменом) необходимо создать новый 'virual host' вместо переписывания дефолтного.
+
 ========================================================
 Настройка django
 
