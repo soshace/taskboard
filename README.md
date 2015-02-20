@@ -28,14 +28,15 @@ p: super
 Необходимо поставить пакеты ubuntu для "postgresql", "apache", "python". В некоторых случаях понадобится команда "sudo" или быть в той или иной группе, например, www-data.
 
 Рекомендованное обновление системы:
->> >>apt-get update
->> >>apt-get upgrade
+>> apt-get update
+>> apt-get upgrade
 
 Пакеты:
 >> >>apt-get install python-virtualenv python-dev libpq-dev postgresql postgresql-contrib build-essential git python-pip apache2 libapache2-mod-wsgi
 
 ========================================================
-Сначала настраиваем БД.
+**Сначала настраиваем БД**
+
 **Поскольку я использовал AWS образ Ubuntu, мне необходимо было сгенерировать locale**
 >> locale-gen ru_RU ru_RU.UTF-8
 
@@ -46,6 +47,7 @@ p: super
 
 Поставим пароль юзеру по умолчанию:
 >> sudo -u postgres psql postgres
+
 Появится консоль, необходимо ввести "\password postgres", далее он спросить пароль. Вводим, пусть "postgrespassword". Выходим нажав сочетание клавиш "Ctrl+D".
 
 ПРИМЕЧАНИЕ: естественно, в продакшене нужны "сильные" пароли.
@@ -64,11 +66,11 @@ GRANT ALL PRIVILEGES ON DATABASE taskboard TO django;
 БД сконфигурирована.
 
 ========================================================
-Установка "виртуального" окружения python
+**Установка "виртуального" окружения python**
 
-Скачиаем приложение из github.com
+Скачваем приложение из github.com
 >> git clone https://github.com/denova/TaskBoard.git
-* необходимо быть в группе www-data с возможностью записи в /var/www/ директорию
+*необходимо быть в группе www-data с возможностью записи в /var/www/ директорию
 
 Далее устанавливаем виртуальное окружение
 >> virtualenv env
@@ -83,39 +85,58 @@ GRANT ALL PRIVILEGES ON DATABASE taskboard TO django;
 >> deactivate
 
 ========================================================
-Найстройка apache
+**Найстройка apache**
 
 С помощью консольного редактора nano открываем файл:
 >> nano /etc/apache2/sites-enabled/000-default
-и добавляем следующие строки, сразу после "<VirtualHost *:80>":
+
+и добавляем следующие строки, сразу после <VirtualHost *:80>:
 
 "
+
 WSGIDaemonProcess TaskBoard python-path=/var/www/TaskBoard:/var/www/TaskBoard/env/lib/python2.7/site-packages
+
 WSGIProcessGroup TaskBoard
+
 WSGIScriptAlias / /var/www/TaskBoard/taskboard/wsgi.py
 
 Alias /static/ /var/www/TaskBoard/static/
+
 "
+
 Также меняем "DocumentRoot":
+
 "
+
 DocumentRoot /var/www/TaskBoard
+
 "
+
 ПРИМЕЧАНИЕ: в продакш версии (с доменом) необходимо создать новый 'virual host' вместо переписывания дефолтного.
 
 ========================================================
-Настройка django
+**Настройка django**
 
 Первым делом необходимо прописать логин, пароль к БД в файле taskboard/settings.py. Интересующая нас часть будет выглядеть так:
 
 DATABASES = {
+
     'default': {
+
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
         'NAME': 'taskboard',
+
         'USER': 'django',
+
         'PASSWORD': 'djangopassword',
+
         'HOST': '127.0.0.1',
+
         'PORT': '5432',
+
     }
+
 }
 
 ПРИМЕЧАНИЕ: в продакшене следует использовать данные из переменных окружения, текущий способ используется для простоты и оптимизации временных затрат.
