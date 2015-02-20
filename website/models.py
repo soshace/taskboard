@@ -18,3 +18,7 @@ class Task(models.Model):
 	posting_date = models.DateField(auto_now_add=True, blank=True)
 	cost = models.FloatField()
 
+class TaskBoardSystem(models.Model):
+	""" Model containing taskboard system info """
+	commission = models.FloatField()
+

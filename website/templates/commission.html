@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<title>TaskBoard: Поменять коммисию системы</title>
+		<link rel="icon" type="image/x-icon" href="{{STATIC_URL}}images/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="{{STATIC_URL}}images/favicon.ico" />
+
+		<link rel="stylesheet" href="{{STATIC_URL}}css/custom.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap.3.3.2.min.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}css/bootstrap-theme.3.3.2.min.css" />
+
+		<script src="{{STATIC_URL}}js/jquery.2.1.3.min.js"></script>
+		<script src="{{STATIC_URL}}js/bootstrap.3.3.2.min.js"></script>
+		<script src="{{STATIC_URL}}js/custom.js"></script>
+	</head>
+	<body>
+		<div class="container">
+			<!-- logo row -->
+			<div class="row">
+				<div class="col-md-12">
+					<img src="{{STATIC_URL}}images/taskboard-logo.png" style="display: block; margin-left: auto; margin-right: auto;" />
+				</div>
+			</div>
+
+			<!-- select account type row -->
+			<div class="row">
+  				<div class="col-md-4 vcenter">
+  				</div>
+
+  				<div class="col-md-4 vcenter">
+					<form class="well" action="/commission/change/" method="POST" id="commission_form">
+						<legend>Изменить процент</legend>
+						{% csrf_token %}
+						{{ commission_form.as_p }}
+						<button type="submit" class="btn btn-default">Поменять процент!</button>
+					</form>
+					<p style="text-align: center;">
+						<a href="/profile/">В профиль</a>
+					</p> 
+				</div>
+  				
+  				<div class="col-md-4 vcenter">
+  				</div>
+			</div>
+		</div>
+	</body>
+</html>

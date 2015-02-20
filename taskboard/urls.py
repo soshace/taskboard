@@ -13,6 +13,9 @@ urlpatterns = patterns('',
     url(r'^post/$', 'website.views.post'),
     url(r'^feed/$', 'website.views.feed'),
 
+    url(r'^commission/$', 'website.views.commission'),
+    url(r'^commission/change/$', 'website.views.commission_change'),
+
     url(r'^ajax/register/$', 'website.views.ajax_register'),
     url(r'^ajax/login/$', 'website.views.ajax_login'),
     url(r'^ajax/logout/$', 'website.views.ajax_logout'),

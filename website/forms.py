@@ -27,3 +27,6 @@ class PostTaskForm(forms.Form):
 
 class TakeTaskForm(forms.Form):
 	pass
+
+class ChangeCommissionForm(forms.Form):
+	commission = forms.FloatField(widget=forms.NumberInput, label='Введите новую комиссию в процентах (от 0 до 100)', min_value = 0.0, max_value=100.0)

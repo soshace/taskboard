@@ -8,9 +8,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.contrib.admin.views.decorators import staff_member_required
 
-from website.forms import RegistrationForm, LoginForm, PostTaskForm, TakeTaskForm
-from website.models import UserProfile, Task
+from website.forms import RegistrationForm, LoginForm, PostTaskForm, TakeTaskForm, ChangeCommissionForm
+from website.models import UserProfile, Task, TaskBoardSystem
 
 # Create your views here.
 def index(request):
@@ -150,13 +151,47 @@ def ajax_take_task(request, task_number):
     task.executor = request.user
     task.save()
 
+    #get firstly commission amount or create default 10%
+    try:
+        task_board_system = TaskBoardSystem.objects.get(id=1)
+    except ObjectDoesNotExist:
+        task_board_system = TaskBoardSystem(commission=10)
+        task_board_system.save()
+    commission_amount = task_board_system.commission
+
     try:
         user_profile = UserProfile.objects.get(account=request.user)
-        user_profile.cash += (((100.0 - settings.COMMISSION)/100.0) * task.cost)
+        user_profile.cash += (((100.0 - commission_amount)/100.0) * task.cost)
         user_profile.save()
     except ObjectDoesNotExist:
         return HttpResponse("NOWITHDRAWAL")
 
     return HttpResponse("OK")
 
-        
+@staff_member_required
+def commission(request):
+    """ Changing commission only for staff member """
+    commission_form = ChangeCommissionForm(auto_id='commission_%s')
+
+    c = {'commission_form' : commission_form, 'session': request.user}
+    c.update(csrf(request))
+
+    return render_to_response('commission.html', c, context_instance=RequestContext(request))
+
+@staff_member_required
+def commission_change(request):
+    """ Changing commission or create table row """
+    commission_form = ChangeCommissionForm(request.POST)
+
+    if not commission_form.is_valid():
+        return HttpResponse("FORM IS INCORRECT!")
+    commission = commission_form.cleaned_data['commission']
+
+    try:
+        task_board_system = TaskBoardSystem.objects.get(id=1)
+        task_board_system.commission = commission
+        task_board_system.save()
+    except ObjectDoesNotExist:
+        task_board_system = TaskBoardSystem(commission=commission)
+        task_board_system.save()
+    return HttpResponse("NEW COMMISSION IS SAVED")
