@@ -17,7 +17,7 @@ p: elancer
 l: super
 p: super
 
-Чтобы изменить процент комиссии надо залогиниться суперпользователем в /admin/ и пройти в /commission/. Если комиссия не была введена, то умолчанию это 10%. Суперпользователь не может вести деятельность внутри системы (ему и не надо), поэтому у него просто нет профайла.
+Чтобы изменить процент комиссии надо залогиниться суперпользователем в /admin/ и пройти в /commission/. Если комиссия не была введена, то умолчанию это 10%. Суперпользователь не может вести деятельность внутри системы, поэтому у него просто нет профайла.
 
 Если попадете в беду: /ajax/logout/
 
@@ -32,7 +32,7 @@ p: super
 >> apt-get upgrade
 
 Пакеты:
->> >>apt-get install python-virtualenv python-dev libpq-dev postgresql postgresql-contrib build-essential git python-pip apache2 libapache2-mod-wsgi
+>>apt-get install python-virtualenv python-dev libpq-dev postgresql postgresql-contrib build-essential git python-pip apache2 libapache2-mod-wsgi
 
 ========================================================
 **Сначала настраиваем БД**
@@ -48,28 +48,32 @@ p: super
 Поставим пароль юзеру по умолчанию:
 >> sudo -u postgres psql postgres
 
-Появится консоль, необходимо ввести "\password postgres", далее он спросить пароль. Вводим, пусть "postgrespassword". Выходим нажав сочетание клавиш "Ctrl+D".
+Появится консоль, необходимо ввести "\password postgres", далее спросят пароль. Вводим, допустим "postgrespassword". Выходим, нажав сочетание клавиш "Ctrl+D".
 
 ПРИМЕЧАНИЕ: естественно, в продакшене нужны "сильные" пароли.
 
 Создаем базу данных для приложения:
 >> sudo su - postgres
+
 Вводим "createdb taskboard", где "taskboard" - имя бд.
 
 Создаем пользователя, под которым django будет обращаться к БД. Все в той же консоли вводим "createuser --interactive -P". Консоль спросит имя, пароль. Пусть будут "django" и "djangopassword", соответственно. На остальные вопросы отвечаем 'n'.
 
 Теперь необходимо дать пользователю 'django' права.
 >> psql
+
 Вводим на языке sql:
-GRANT ALL PRIVILEGES ON DATABASE taskboard TO django;
+>> GRANT ALL PRIVILEGES ON DATABASE taskboard TO django;
+
 Консоль подтвердит команду ответом "GRANT"
 БД сконфигурирована.
 
 ========================================================
 **Установка "виртуального" окружения python**
 
-Скачваем приложение из github.com
+Скачиваем приложение из github.com
 >> git clone https://github.com/denova/TaskBoard.git
+
 *необходимо быть в группе www-data с возможностью записи в /var/www/ директорию
 
 Далее устанавливаем виртуальное окружение
@@ -90,7 +94,7 @@ GRANT ALL PRIVILEGES ON DATABASE taskboard TO django;
 С помощью консольного редактора nano открываем файл:
 >> nano /etc/apache2/sites-enabled/000-default
 
-и добавляем следующие строки, сразу после <VirtualHost *:80>:
+и добавляем следующие строки, сразу после \<VirtualHost *:80\>:
 
 "
 
