@@ -155,3 +155,6 @@ DATABASES = {
 >> env/bin/python manage.py createsuperuser
 
 Данный пользователь сможет заходить в админку django, а также менять процент комиссии у "системы".
+
+
+Network for professionals [Soshace](https://soshace.com)
